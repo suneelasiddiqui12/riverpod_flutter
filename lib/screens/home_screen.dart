@@ -42,7 +42,7 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: Column(
+        body: Column(
         children: [
           UserSearchSortWidget(
             sortBy: ref.read(userListProvider.notifier).sortOrder, // Assuming this is a string from your notifier
@@ -119,7 +119,7 @@ class HomeScreen extends ConsumerWidget {
                                       ],
                                     ),
                                   );
-            
+
                                   if (confirmDelete == true) {
                                     ref.read(userListProvider.notifier).deleteUser(user.id ?? " ");
                                     ScaffoldMessenger.of(context).showSnackBar(
@@ -188,10 +188,11 @@ class HomeScreen extends ConsumerWidget {
         tooltip: "Add a new user",
         child: Icon(Icons.add, color: Colors.white),
       ),
-      bottomNavigationBar: BottomNavigationBarScreen()
+     // bottomNavigationBar: BottomNavigationBarScreen()
     );
   }
 }
+
 class UserSearchSortWidget extends StatelessWidget {
   final String sortBy;
   final ValueChanged<String?> onSortChanged;
@@ -230,3 +231,63 @@ class UserSearchSortWidget extends StatelessWidget {
     );
   }
 }
+
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:riverpod_flutter/state/users_provider.dart';
+// import 'package:riverpod_flutter/widgets/sort_drop_down.dart' show SortDropdown;
+//
+// import '../constants/app_colors.dart' show AppColors;
+// import 'add_user_screen.dart';
+// import 'bottom_navigation_screen.dart';
+//
+// class HomeScreen extends ConsumerWidget {
+//     const HomeScreen({super.key});
+//
+//     @override
+//    Widget build(BuildContext context, WidgetRef ref) {
+//       final usersAsync = ref.watch(userListProvider);
+//
+//       return Scaffold(
+//         body: usersAsync.when(
+//           data: (users) {
+//             if (users.isEmpty) {
+//               return Center(
+//                 child: Text(
+//                   "No users available, please add some!",
+//                   style: TextStyle(fontSize: 18),
+//                 ),
+//               );
+//             }
+//             return ListView.builder(
+//               itemCount: users.length,
+//               itemBuilder: (context, index) {
+//                 final user = users[index];
+//                 return ListTile(
+//                   title: Text(user.name ?? "No Name"),
+//                   subtitle: Text(user.email ?? "No Email"),
+//                 );
+//               },
+//             );
+//           },
+//           loading: () => Center(child: CircularProgressIndicator()),
+//           error: (err, stack) => Center(child: Text("Error loading users")),
+//         ),
+//       floatingActionButton: FloatingActionButton(
+//         onPressed: () async {
+//           await Navigator.push(
+//             context,
+//             MaterialPageRoute(builder: (context) => AddUserScreen()),
+//           );
+//           ref.read(userListProvider.notifier).loadUsers();
+//         },
+//         backgroundColor: AppColors.buttonColor,
+//         tooltip: "Add a new user",
+//         child: Icon(Icons.add, color: Colors.white),
+//       ),
+//        // bottomNavigationBar: BottomNavigationBarScreen()
+//
+//       );
+//     }
+// }
