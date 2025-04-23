@@ -46,6 +46,7 @@ class UserListNotifier extends StateNotifier<AsyncValue<List<User>>> {
   final UserRepository _userRepository;
   String? _searchQuery;
   String _sortOrder = 'name'; // can be 'name', 'email', or 'dateAdded'
+  bool _hasLoaded = false;
 
   int _page = 1;
   final int _pageSize = 10;
@@ -61,6 +62,8 @@ class UserListNotifier extends StateNotifier<AsyncValue<List<User>>> {
   String get sortOrder => _sortOrder;
 
   Future<void> loadUsers() async {
+    if (_hasLoaded) return; // ✅ Prevent repeated loads
+    _hasLoaded = true;
     try {
       state = const AsyncValue.loading();
       await _userRepository.loadUsers();
